@@ -29,7 +29,7 @@ on:
         default: false
       team:
         description: 'Team to run tests'
-        required: false
+        required: true
         type: string
         default: 'autobots'
 
