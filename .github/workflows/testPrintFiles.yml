@@ -59,8 +59,10 @@ jobs:
       branch: ${{ github.event.inputs.branch }}
       platform: ${{ github.event.inputs.platform }}
       build_slug: ${{ github.event.inputs.build_slug }}
-      update_zephyr: ${{ github.event.inputs.update_zephy == 'true' && 'true' || 'false' }}
+      update_zephyr: false
       team: 'firestarters'
+  
+  #${{ github.event.inputs.update_zephy == 'true' && 'true' || 'false' }}
   ##uses: ./.github/workflows/appium-regression-new-structure.yml
   #last_job_verification:
   #  name: List a message to know that all job finish
