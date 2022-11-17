@@ -3,7 +3,7 @@ name: Manual print files new structure example
 
 # Job Inputs: These options are selected before the workflow run starts
 on:
-  workflow__dispatch:
+  workflow_dispatch:
     inputs:
       # The branch that is going to be used for the tests
       branch:
