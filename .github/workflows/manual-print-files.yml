@@ -66,8 +66,7 @@ jobs:
         if: ${{ github.event.inputs.platform == 'iOS' }}
         id: filenames_ios
         run: |
-          echo "$(ls ${{ github.workspace }})"
-          files=$(ls ${{ github.workspace }}/src/test/resources/${{ github.event.inputs.team }}/regression/iOS)
+          files=$(ls ${{ github.workspace }}/.git/src/test/resources/${{ github.event.inputs.team }}/regression/iOS)
           MATRIX_JSON="["
 
           for file in ${files}; do
