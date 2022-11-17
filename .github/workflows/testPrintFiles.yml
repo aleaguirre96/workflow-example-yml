@@ -52,7 +52,6 @@ jobs:
 
   call_team_regression_test_example:
     name: Call regression test example by team
-    runs-on: ubuntu-latest
     needs: checkOut_action
     strategy:
       matrix:

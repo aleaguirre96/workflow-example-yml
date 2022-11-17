@@ -33,6 +33,37 @@ on:
         type: string
         default: ''
 
+    workflow__dispatch:
+    inputs:
+      # The branch that is going to be used for the tests
+      branch:
+        description: 'Branch to checkout from'
+        required: true
+        type: string
+        default: 'feature/IOSMNS-13627/iOS-pipeline-based-on-new-folder-structure'
+      # Desired platform to run the tests
+      platform:
+        description: 'Platform to run tests'
+        required: true
+        type: choice
+        options:
+          - iOS
+          - Android
+      build_slug:
+        description: 'Bitrise build slug'
+        required: false
+        default: ''
+      update_zephyr:
+        description: 'Upload test results to zephyr'
+        required: true
+        type: boolean
+        default: false
+      team:
+        description: 'Team to run tests'
+        type: choice
+        options:
+          - firestarters
+          - autobots
 jobs:
   debug_workflow:
     name: Debug workflow
