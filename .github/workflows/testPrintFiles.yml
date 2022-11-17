@@ -56,7 +56,8 @@ jobs:
     strategy:
       matrix:
         team: [ firestarters, autobots ]
-    uses: ./.github/workflows/appium-regression-new-structure.yml
+    #uses: ./.github/workflows/appium-regression-new-structure.yml
+    uses: aleaguirre96/workflow-example-yml/.github/workflows/appium-regression-new-structure.yml@main
     with:
       branch: ${{ github.event.inputs.branch }}
       platform: ${{ github.event.inputs.platform }}
