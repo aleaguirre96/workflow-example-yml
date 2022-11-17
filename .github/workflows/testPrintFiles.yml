@@ -56,7 +56,7 @@ jobs:
     needs: checkOut_action
     strategy:
       matrix:
-        team: [ firestarters, autobots ]
+        team: [ 'firestarters', 'autobots' ]
     uses: ./.github/workflows/appium-regression-new-structure.yml
     with:
       branch: ${{ github.event.inputs.branch }}
