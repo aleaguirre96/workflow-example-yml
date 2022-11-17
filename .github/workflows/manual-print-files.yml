@@ -1,0 +1,90 @@
+name: Manual print files new structure example
+# Workflow runs when manually triggered using the  UI or API.
+
+# Job Inputs: These options are selected before the workflow run starts
+on:
+  workflow_call:
+    inputs:
+      # The branch that is going to be used for the tests
+      branch:
+        description: 'Branch to checkout from'
+        required: true
+        type: string
+        default: 'feature/IOSMNS-13627/iOS-pipeline-based-on-new-folder-structure'
+      # Desired platform to run the tests
+      platform:
+        description: 'Platform to run tests'
+        required: true
+        type: choice
+        options:
+          - iOS
+          - Android
+      build_slug:
+        description: 'Bitrise build slug'
+        required: false
+        default: ''
+      update_zephyr:
+        description: 'Upload test results to zephyr'
+        required: true
+        type: boolean
+        default: false
+      team:
+        description: 'Team to run tests'
+        required: true
+        options:
+          - firestarters
+          - autobots
+
+jobs:
+  debug_workflow:
+    name: Debug workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print input parameters
+        run: |
+          echo "github.event.inputs.branch: ${{ github.event.inputs.branch }}"
+          echo "github.event.inputs.platform: ${{ github.event.inputs.platform }}"
+          echo "github.event.inputs.build_slug: ${{ github.event.inputs.build_slug }}"
+          echo "github.event.inputs.update_zephyr: ${{ github.event.inputs.update_zephyr }}"
+          echo "github.event.inputs.team: ${{ github.event.inputs.team }}"
+  # Get Files Job: Gets all the feature files from the folders depending on selected 'Platform' option
+  get_files:
+    name: Get all feature file names
+    runs-on: ubuntu-latest
+    needs: debug_workflow
+    outputs:
+      ios_files: ${{ steps.filenames_ios.outputs._feature_files }}
+      android_files: ${{ steps.filenames_android.outputs._feature_files }}
+    steps:
+      # Via command line, get all the iOS feature file names to a jSON array, and set it to ios_files output
+      - name: iOS filenames to array
+        if: ${{ github.event.inputs.platform == 'iOS' }}
+        id: filenames_ios
+        run: |
+          files=$(ls ${{ github.workspace }}/src/test/resources/${{ github.event.inputs.team }}/regression/iOS)
+          MATRIX_JSON="["
+
+          for file in ${files}; do
+            MATRIX_JSON+=$(sed 's/^/"/;s/$/",/' <<< "${file}")
+          done
+
+          MATRIX_JSON=$(sed 's/,$//' <<< "${MATRIX_JSON}")
+          MATRIX_JSON+="]"
+          echo "${MATRIX_JSON}"
+          echo "::set-output name=_feature_files::${MATRIX_JSON}"
+
+  list_test_ios:
+    name: List all feature file names from get files iOS
+    runs-on: ubuntu-latest
+    if: github.event.inputs.platform == 'iOS'
+    needs: get_files # Means that needs to be finished the job: get_files
+    # Strategy to run every test case in a parallel github machine
+    strategy:
+      fail-fast: false # Means that doesn't matter if a test fails, the workflow will keep running
+      matrix:
+        feature: ${{ fromJson(needs.get_files.outputs.ios_files) }} # Here we use the jSON array built before
+    steps:
+      - name: Print output file
+        run: |
+          echo "${{github.event.inputs.team}}"
+          echo "${{matrix.feature}}"
