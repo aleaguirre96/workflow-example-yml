@@ -54,6 +54,10 @@ jobs:
       ios_files: ${{ steps.filenames_ios.outputs._feature_files }}
       android_files: ${{ steps.filenames_android.outputs._feature_files }}
     steps:
+      - name: Checkout from ${{ github.event.inputs.branch }}
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
       # Via command line, get all the iOS feature file names to a jSON array, and set it to ios_files output
       - name: iOS filenames to array
         if: ${{ github.event.inputs.platform == 'iOS' }}
