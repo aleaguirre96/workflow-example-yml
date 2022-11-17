@@ -31,7 +31,7 @@ on:
         description: 'Team to run tests'
         required: true
         type: string
-        default: ''
+        default: 'autobots'
 
 jobs:
   debug_workflow:
