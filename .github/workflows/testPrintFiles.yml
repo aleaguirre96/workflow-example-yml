@@ -59,7 +59,7 @@ jobs:
       branch: ${{ github.event.inputs.branch }}
       platform: ${{ github.event.inputs.platform }}
       build_slug: ${{ github.event.inputs.build_slug }}
-      update_zephyr: ${{ github.event.inputs.update_zephyr != '' && github.event.inputs.update_zephyr || true }}
+      update_zephyr: ${{ github.event.inputs.update_zephy == 'true' && 'true' || 'false' }}
       team: 'firestarters'
   ##uses: ./.github/workflows/appium-regression-new-structure.yml
   #last_job_verification:
