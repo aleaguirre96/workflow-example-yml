@@ -21,6 +21,7 @@ on:
       build_slug:
         description: 'Bitrise build slug'
         required: false
+        type: string
         default: ''
       update_zephyr:
         description: 'Upload test results to zephyr'
