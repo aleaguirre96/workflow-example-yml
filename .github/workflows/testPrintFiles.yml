@@ -53,10 +53,6 @@ jobs:
   call_team_regression_test_example:
     name: Call regression test example by team
     needs: checkOut_action
-    #strategy:
-    #  matrix:
-    #    team: [ firestarters, autobots ]
-    #uses: ./.github/workflows/appium-regression-new-structure.yml
     uses: aleaguirre96/workflow-example-yml/.github/workflows/appium-regression-new-structure.yml@main
     with:
       branch: ${{ github.event.inputs.branch }}
