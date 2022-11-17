@@ -54,16 +54,16 @@ jobs:
   call_team_regression_test_example:
     name: Call regression test example by team
     needs: checkOut_action
-    #strategy:
-    #  matrix:
-    #    teamM: [ firestarters, autobots ]
+    strategy:
+      matrix:
+        teamM: [ firestarters, autobots ]
     uses: ./.github/workflows/appium-regression-new-structure.yml
     with:
       branch: ${{ github.event.inputs.branch }}
       platform: ${{ github.event.inputs.platform }}
       build_slug: ${{ github.event.inputs.build_slug }}
       update_zephyr: false
-      team:  "firestarters"
+      team:  ${{ matrix.teamM }}
   
   #uses: aleaguirre96/workflow-example-yml/.github/workflows/appium-regression-new-structure.yml@main
   #${{ github.event.inputs.update_zephy == 'true' && 'true' || 'false' }}
