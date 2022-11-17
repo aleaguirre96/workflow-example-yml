@@ -48,6 +48,7 @@ jobs:
           echo "github.event.inputs.build_slug: ${{ github.event.inputs.build_slug }}"
           echo "github.event.inputs.update_zephyr: ${{ github.event.inputs.update_zephyr }}"
           echo "github.event.inputs.team: ${{ github.event.inputs.team }}"
+          echo "info: $(ls ${{ github.workspace }})"
   # Get Files Job: Gets all the feature files from the folders depending on selected 'Platform' option
   get_files:
     name: Get all feature file names
@@ -62,8 +63,6 @@ jobs:
         if: ${{ github.event.inputs.platform == 'iOS' }}
         id: filenames_ios
         run: |
-          echo "$(ls ${{ github.workspace }})"
-
           files=$(ls ${{ github.workspace }}/src/test/resources/${{ github.event.inputs.team }}/regression/iOS)
           MATRIX_JSON="["
 
