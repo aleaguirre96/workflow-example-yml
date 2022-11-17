@@ -59,7 +59,7 @@ jobs:
       platform: ${{ github.event.inputs.platform }}
       build_slug: ${{ github.event.inputs.build_slug }}
       update_zephyr: ${{ github.event.inputs.update_zephyr }}
-      team: 'firestarters'
+      
 
   #last_job_verification:
   #  name: List a message to know that all job finish
